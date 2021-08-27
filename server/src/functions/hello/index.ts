@@ -1,19 +1,18 @@
-import schema from './schema';
-import { handlerPath } from '@libs/handlerResolver';
+import "source-map-support/register";
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyResult,
+  Handler,
+} from "aws-lambda";
 
-export default {
-  handler: `${handlerPath(__dirname)}/handler.main`,
-  events: [
-    {
-      http: {
-        method: 'post',
-        path: 'hello',
-        request: {
-          schema: {
-            'application/json': schema
-          }
-        }
-      }
-    }
-  ]
-}
+export const handler: Handler = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      method: event.httpMethod,
+      query: event.queryStringParameters,
+    }),
+  };
+};
