@@ -34,11 +34,17 @@ provider:
   stage: dev
   region: ap-northeast-1
 functions:
-  hello:
-    handler: src/functions/index.hello
+  createMeeting:
+    handler: src/functions/index.createMeeting
     events:
       - http:
-          path: /hello
+          path: /meeting
+          method: get
+  getMeetings:
+    handler: src/functions/index.getMeetings
+    events:
+      - http:
+          path: /meetings
           method: get
 resources:
   Resources:
