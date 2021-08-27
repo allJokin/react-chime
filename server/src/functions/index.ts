@@ -1,1 +1,1 @@
-export { handler as hello } from "./hello";
+export { handler as hello } from "./createMeeting";

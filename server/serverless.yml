@@ -1,15 +1,26 @@
 service: server
 frameworkVersion: "2"
+
 custom:
   webpack:
     webpackConfig: ./webpack.config.js
-    includeModules: true
     packager: "yarn"
   serverless-offline:
     httpPort: 8080
+    lambdaPort: 8082
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+  tableNames:
+    MEETING_TABLE_NAME: Meeting-${self:provider.stage}
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-dynamodb-local
 provider:
   name: aws
   runtime: nodejs14.x
@@ -18,7 +29,10 @@ provider:
     shouldStartNameWithService: true
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    MEETING_TABLE_NAME: ${self:custom.tableNames.MEETING_TABLE_NAME}
   lambdaHashingVersion: "20201221"
+  stage: dev
+  region: ap-northeast-1
 functions:
   hello:
     handler: src/functions/index.hello
@@ -26,3 +40,16 @@ functions:
       - http:
           path: /hello
           method: get
+resources:
+  Resources:
+    MeetingTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableNames.MEETING_TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: meetingId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: meetingId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
