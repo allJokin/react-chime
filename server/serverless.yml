@@ -39,7 +39,7 @@ functions:
     events:
       - http:
           path: /meeting
-          method: get
+          method: post
   getMeetings:
     handler: src/functions/index.getMeetings
     events:

@@ -20,16 +20,24 @@ const docClient = DynamoDBDocumentClient.from(client);
 const meetingTableName = process.env.MEETING_TABLE_NAME;
 
 export const handler: Handler = async (
-  _event: APIGatewayProxyEvent
+  event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
+  const body = JSON.parse(event.body);
+  if (!body || !body.title) {
+    return {
+      statusCode: 500,
+      body: "title not found",
+    };
+  }
+  const { title } = body;
   const requestId = uuidv4();
-  const region = "ap-northeast-1";
+  const region = process.env.AWS_REGION;
   try {
     const { Meeting } = await chime
       .createMeeting({
         ClientRequestToken: requestId,
         MediaRegion: region,
-        ExternalMeetingId: "タイトル",
+        ExternalMeetingId: title,
       })
       .promise();
     await putMeeting(Meeting);
