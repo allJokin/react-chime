@@ -3,6 +3,7 @@ import { useAsync } from "react-async-hook";
 
 type Meeting = {
   meetingId: string;
+  title: string;
 };
 
 const fetchMeetings = async () =>
@@ -16,7 +17,11 @@ const MeetingsPage: React.VFC = () => {
       <h1>ミーティング一覧</h1>
       <ul>
         {meetings.map((meeting) => {
-          return <li key={meeting.meetingId}>{meeting.meetingId}</li>;
+          return (
+            <li key={meeting.meetingId}>
+              {meeting.title} : {meeting.meetingId}
+            </li>
+          );
         })}
       </ul>
     </div>

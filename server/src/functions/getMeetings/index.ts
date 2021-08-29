@@ -39,5 +39,8 @@ const getMeetings = async (): Promise<any> => {
     TableName: meetingTableName,
   });
 
-  return (await docClient.send(command)).Items;
+  return (await docClient.send(command)).Items.map((item) => ({
+    meetingId: item.meetingId,
+    title: item.Meeting.ExternalMeetingId,
+  }));
 };
