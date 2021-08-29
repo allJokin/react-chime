@@ -23,9 +23,7 @@ export const handler: Handler = async (
     const meetings = await getMeetings();
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        meetings,
-      }),
+      body: JSON.stringify(meetings),
     };
   } catch (err) {
     console.error(err);

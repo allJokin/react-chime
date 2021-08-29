@@ -1,8 +1,9 @@
 import React from "react";
 import { useMeetingManager } from "amazon-chime-sdk-component-library-react";
-import MeetingView from "./components/MeetingView";
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
+import MeetingsPage from "./routes/meetings/MeetingsPage";
+import MeetingNewPage from "./routes/meetings/MeetingNewPage";
 
 const Div = styled.div`
   width: 100%;
@@ -33,10 +34,16 @@ function App() {
     await meetingManager.start();
   };
   return (
-    <Div>
-      <MeetingView />
-      <button onClick={joinMeeting}>Join</button>
-    </Div>
+    <Router>
+      <Switch>
+        <Route path="/meetings/new">
+          <MeetingNewPage />
+        </Route>
+        <Route path="/meetings">
+          <MeetingsPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

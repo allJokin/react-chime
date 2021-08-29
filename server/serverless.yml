@@ -40,12 +40,14 @@ functions:
       - http:
           path: /meeting
           method: post
+          cors: true
   getMeetings:
     handler: src/functions/index.getMeetings
     events:
       - http:
           path: /meetings
           method: get
+          cors: true
 resources:
   Resources:
     MeetingTable:
