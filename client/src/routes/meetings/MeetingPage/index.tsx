@@ -11,7 +11,7 @@ type Meeting = {
 };
 
 const fetchMeeting = async (id: string) =>
-  (await fetch(`${process.env.REACT_APP_ENDPOINT}meeting/${id}`)).json();
+  (await fetch(`${process.env.REACT_APP_ENDPOINT}meetings/${id}`)).json();
 
 const MeetingPage: React.VFC = () => {
   const { id } = useParams<MeetingPageParams>();

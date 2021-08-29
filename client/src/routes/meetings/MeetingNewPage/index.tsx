@@ -7,7 +7,7 @@ type Meeting = {
 
 const postMeeting = async (title: string) =>
   (
-    await fetch(`${process.env.REACT_APP_ENDPOINT}meeting`, {
+    await fetch(`${process.env.REACT_APP_ENDPOINT}meetings`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
