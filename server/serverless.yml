@@ -48,17 +48,13 @@ functions:
           path: /meetings
           method: get
           cors: true
-  getMeeting:
-    handler: src/functions/index.getMeeting
+  joinMeeting:
+    handler: src/functions/index.joinMeeting
     events:
       - http:
-          path: /meetings/{id}
+          path: /join
           method: get
           cors: true
-          request:
-            parameters:
-              paths:
-                id: true
 resources:
   Resources:
     MeetingTable:
